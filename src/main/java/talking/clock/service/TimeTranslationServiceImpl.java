@@ -48,20 +48,18 @@ public class TimeTranslationServiceImpl implements TimeTranslationService {
 		int hours = Integer.parseInt(hourMins[0]);
 		final int mins = Integer.parseInt(hourMins[1]);
 		final StringBuilder sb = new StringBuilder();
-		final String hourTranslation = getHourTranslation(hours);
 		switch (mins) {
 		case FIFTEEN:
-			sb.append(FIFTEEN_PAST).append(SPACE).append(hourTranslation);
+			sb.append(FIFTEEN_PAST).append(SPACE).append(getHourTranslation(hours));
 			break;
 		case THIRTY:
-			sb.append(HALF_PAST).append(SPACE).append(hourTranslation);
+			sb.append(HALF_PAST).append(SPACE).append(getHourTranslation(hours));
 			break;
 		case FORTY_FIVE:
 			sb.append(FIFTEEN_TO).append(SPACE).append(getHourTranslation(++hours));
 			break;
 		default:
-			final String minsTranslation = getMinsTranslation(mins);
-			sb.append(hourTranslation).append(SPACE).append(minsTranslation);
+			sb.append(getHourTranslation(hours)).append(SPACE).append(getMinsTranslation(mins));
 			break;
 		}
 		return sb;
@@ -69,8 +67,7 @@ public class TimeTranslationServiceImpl implements TimeTranslationService {
 
 	private String getHourTranslation(int num) {
 		// in case the time is 23:45
-		final int hour = (num == TWENTY_FOUR) ? TWELVE : num;
-		final String translation = NumberToWordsConvertor.convertToWords(hour);
+		final String translation = NumberToWordsConvertor.convertToWords((num == TWENTY_FOUR) ? TWELVE : num);
 		return translation.equals(ZERO) ? TWELVE_STR : translation;
 	}
 
